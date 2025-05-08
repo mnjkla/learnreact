@@ -1,18 +1,28 @@
 import React from "react";
 class MyComponent extends React.Component {
   state = {
-    name: "Minh",
+    name: "aaaMinh",
     age: 20,
   };
   handleClick(event) {
     console.log("Hello, World!");
     // console.log(event.target);
-    console.log("my name is " + this.state.name);
-  }
-  handleOnMoverOver(event) {
-    console.log(event.pageX);
-  }
 
+    console.log("random " + Math.floor(Math.random() * 100));
+    this.setState({
+      name: "Minh",
+      age: Math.floor(Math.random() * 100),
+    });
+  }
+  handleOnChangeInput = (event) => {
+    this.setState({
+      name: event.target.value,
+    });
+  };
+  handleOnSubmit = (event) => {
+    event.preventDefault(); // ngăn chặn hành vi mặc định của form
+    console.log("submit form", this.state);
+  };
   //jsx
   render() {
     return (
@@ -21,8 +31,23 @@ class MyComponent extends React.Component {
         <p>This is my first React component.</p>
         <p>Name: {this.state.name} </p>
         <p>Age: {this.state.age}</p>
-        <button onMouseOver={this.handleOnMoverOver}>Hover me</button>
-        <button onClick={this.handleClick}> click me</button>
+
+        <button
+          onClick={(event) => {
+            this.handleClick(event);
+          }}
+        >
+          click me
+        </button>
+        <form onSubmit={(event) => this.handleOnSubmit(event)}>
+          <input
+            type="text"
+            onChange={(event) => {
+              this.handleOnChangeInput(event);
+            }}
+          />
+          <button>Summit</button>
+        </form>
       </div>
     );
   }
